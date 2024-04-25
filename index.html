@@ -38,8 +38,8 @@
     <canvas id="video-canvas" style="width:100%; height:100%; object-fit:cover; position:absolute"></canvas>
     <div id="startARDiv" class="ctaDiv">
         <select id="chooseCamSel" style="display: none;" onchange="SelectCam()"></select>
-        <p style="text-align: center; width:60vw"> your device's camera and motion sensors</p>
-        <button id="startARButton" style="display:none" onclick="StartAR()">OK</button>
+        <p style="text-align: center; width:60vw">您的设备的摄像头和运动传感器</p>
+        <button id="startARButton" style="display:none" onclick="StartAR()">是</button>
     </div>
     <div id="screenshotDiv" style="display: none;" class="ctaDiv">
         <div style="position:relative; background-color:white; padding:10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.25);">
@@ -71,7 +71,7 @@
             window.wTracker = new WorldTracker(arCamera);
             try{
                 await wTracker.initialize("./opencv.js");
-                console.log("World tracker initialized!");   
+                console.log("World tracker initialized!");
             }
             catch (error) {
                 console.error("Failed to initialize world tracker. Are you missing opencv.js?", error);
@@ -93,7 +93,7 @@
         function StartAR() {
             canvas.style.width = window.innerWidth + "px";
             canvas.style.height = window.innerHeight + "px";
-            
+
             document.getElementById('startARDiv').style.display = 'none';
             createUnityInstance(document.querySelector("#unity-canvas"), {
                     dataUrl: "Build/ARYaoQingHan.github.io.data.unityweb",
@@ -116,11 +116,11 @@
                 loadingBar.style.display = "none";
             });
             StartMotionSensors();
-            
+
             StartGPS()
 
-            
-            
+
+
             loadingBar.style.display = "block";
         }
 
@@ -139,7 +139,7 @@
             try{
                 window.webcamStream = await navigator.mediaDevices.getUserMedia(window.WEBCAM_SETTINGS);
                 arCamera.setFlipped(window.WEBCAM_SETTINGS.video.facingMode == 'user');
-                
+
                 console.log("Webcam access granted");
                 requestingForCameraPermission = false;
             }
@@ -148,7 +148,7 @@
                 console.error("getUserMedia error - " , err);
                 ShowError("Failed to start the experience. Camera permission was denied");
                 window.requestingForCameraPermission = false;
-            }           
+            }
         }
         async function StartWebcam(){
             console.log("StartWebcam")
@@ -174,12 +174,12 @@
                 catch(err){
                     console.error("Webcam failed to start - ", err);
                     window.unityInstance.SendMessage('ARCamera', 'OnStartWebcamFail');
-                }   
+                }
             }
             else{
                 console.error("Webcam failed to start - permission not yet granted");
                 window.unityInstance.SendMessage('ARCamera', 'OnStartWebcamFail');
-            }  
+            }
         }
 
         async function LoadWebcams(){
@@ -201,8 +201,8 @@
                         //back and front
                         camDevices.push(mediaDevice);
                         console.log('pushed', mediaDevice);
-                    }   
-                    
+                    }
+
                     ctr++;
                 }
             });
@@ -266,7 +266,7 @@
             });
         }
 
-        function StartGPS(){            
+        function StartGPS(){
             window.wTracker.startGPS()
             .then((pos)=>{
                 console.log("GPS started", pos);
@@ -276,7 +276,7 @@
                 //ShowError("Failed to start GPS " + error);
             });
         }
-        
+
 
         function ShowError(error){
             document.getElementById("errorDiv").style.display = "flex";
@@ -289,7 +289,7 @@
             document.getElementById("screenshotImg").style.width = "80vw";
             document.getElementById("screenshotImg").style.height = 80 / window.innerWidth * window.innerHeight + "vw";
         }
-        
+
     </script>
 </body>
 </html>
